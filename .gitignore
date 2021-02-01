@@ -1,1 +1,1 @@
-test*.py    #ignore all python file startswith test.
+*test*   #ignore all files contain 'test'.
