@@ -10,6 +10,8 @@ url = {"start_up":"https://global.taobao.com",
           
 def main(url):
     toy_list = Setup.set_config()
+    if toy_list == None:
+        return
     #login = True
     login = Browser_op.login(url)
     if login:

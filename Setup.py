@@ -1,7 +1,8 @@
-from datetime import datetime
+from datetime import datetime as dt
+
 
 def get_time():
-    time_now = datetime.now()
+    time_now = dt.now()
     return time_now
 
 
@@ -17,9 +18,11 @@ def set_config():
             for line in lines:
                 data = {"id":None,"name":None,"brand":None,"category":None,"status":None,"size":None,"release_date":None,"url":None,"tab_id":None}
                 line = line.split(",")
-                set_time = datetime.strptime(line[0], '%Y-%m-%d %H:%M:%S')
+                set_time = dt.strptime(line[0], '%Y-%m-%d %H:%M:%S')
                 if set_time <= now_time:
                     print("釋出時間已過，第{}組設定失敗".format(count))
+                    count += 1
+
                 else:
                     set_url = line[1].replace("\n","")
                     data["id"] = count
@@ -27,6 +30,9 @@ def set_config():
                     data["url"] = set_url
                     wish_list.append(data)
                     count += 1
+            if wish_list == [] or wish_list == None:
+                print("設定失敗，請檢查設定檔")
+                return None
         if len(wish_list) != 0:
             print("完成設定，共{}組商品".format(len(wish_list)))
             return wish_list

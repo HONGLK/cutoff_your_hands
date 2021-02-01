@@ -1,6 +1,7 @@
 import os
 import time
 import json
+import time_compare
 from bs4 import BeautifulSoup
 from datetime import datetime
 from selenium import webdriver
@@ -74,9 +75,10 @@ def get_good_prop(data):
                     print("---請在網站選取品項、數量，以及確認寄送地址---\n---設定完畢請輸入y---")
                     address_check = str(input())
                     if address_check == "y" or "Y":
-                        #尋找並點選下單按鈕
-                        order_btn = br.find_element_by_link_text("立即购买")
-                        order_btn.click()
+                        time_compare_result = time_compare.tc(data)
+                        if time_compare_result:
+                            br.refresh()
+                            start_order()
                     else:
                         raise ValueError
                     
@@ -98,4 +100,11 @@ def get_good_prop(data):
         print(e)
 
 
-def start_order(br):
+def start_order():
+    #尋找並點選下單按鈕
+    print("---下單中---")
+    order_btn = br.find_element_by_xpath(".//div[@class='tb-btn-buy tb-btn-sku']/a[@id='J_LinkBuy']")
+    order_btn.click()
+    #payment_btn = br.find_element_by_link_text("提交订单")
+    #payment_btn.click()
+    return
