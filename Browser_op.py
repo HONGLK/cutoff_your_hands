@@ -72,7 +72,7 @@ def get_good_prop(data):
 
             while True:
                 try:
-                    print("---請在網站選取品項、數量，以及確認寄送地址---\n---設定完畢請輸入y---")
+                    print("---請在網站選取品項、數量，及確認寄送地址---\n---設定完畢請輸入y---")
                     address_check = str(input())
                     if address_check == "y" or "Y":
                         time_compare_result = time_compare.tc(data)
@@ -102,9 +102,19 @@ def get_good_prop(data):
 
 def start_order():
     #尋找並點選下單按鈕
-    print("---下單中---")
-    order_btn = br.find_element_by_xpath(".//div[@class='tb-btn-buy tb-btn-sku']/a[@id='J_LinkBuy']")
+    
+    while True:
+        start = time.clock()
+        try:
+            order_btn = br.find_element_by_xpath("//div[@class='tb-btn-buy tb-btn-sku']/a[@role='button']")
+            print("已找到下單鈕")
+            end = time.clock()
+            break
+        except:
+            print("未找到下單鈕")
     order_btn.click()
+    print("---下單中---")
+    print("耗時:", str(end-start))
     #payment_btn = br.find_element_by_link_text("提交订单")
     #payment_btn.click()
     return
